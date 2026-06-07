@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Sajidah & Ilham — Japan Financial Hub</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg width='512' height='512' viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='512' height='512' rx='80' fill='%233a6186'/%3E%3Crect width='512' height='512' rx='80' fill='%2389a4c7' opacity='.55'/%3E%3Crect x='0' y='340' width='512' height='172' fill='%23e8c49a' opacity='.5'/%3E%3Ccircle cx='390' cy='80' r='32' fill='%23fff7d6' opacity='.92'/%3E%3Ccircle cx='398' cy='72' r='26' fill='%233a6186' opacity='.65'/%3E%3Cellipse cx='256' cy='430' rx='320' ry='130' fill='%234a7c59'/%3E%3Cellipse cx='256' cy='512' rx='280' ry='100' fill='%232d5236'/%3E%3Crect x='210' y='300' width='92' height='78' rx='4' fill='%23f2e8d4'/%3E%3Cpolygon points='198,304 256,238 314,304' fill='%238b4e3b'/%3E%3Crect x='244' y='336' width='24' height='42' rx='12' fill='%237a5c3c'/%3E%3Crect x='218' y='316' width='22' height='20' rx='3' fill='%23aac8e8' opacity='.85'/%3E%3Crect x='272' y='316' width='22' height='20' rx='3' fill='%23aac8e8' opacity='.85'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,700;1,9..144,300&family=DM+Mono:wght@300;400;500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#1a1a1a;--mu:#6b6258;--paper:#faf6ef;--bg:#f2ebe0;--gn:#2d6a4f;--gn2:#d8eede;--gn3:#f0faf3;--bl:#1e3a6e;--bl2:#dde6f7;--gd:#8a5c00;--gd2:#fef3d0;--gd3:#fff9eb;--rd:#9b2c2c;--rd2:#fde8e8;--bo:#e2d9cb;--sh:0 4px 24px rgba(40,30,10,.09);--sk:#e8b4be;--sk2:#fdf0f3}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Instrument Sans',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh}
+
+#ov.hide{display:none}
+.ob{background:var(--paper);border-radius:20px;padding:26px;max-width:480px;width:100%;box-shadow:0 24px 60px rgba(0,0,0,.35)}
+.ob h2{font-family:'Fraunces',serif;font-size:24px;font-weight:500;margin-bottom:4px}
+.ob h2 em{font-style:italic;color:var(--gd)}
+.ob p{font-size:12px;color:var(--mu);line-height:1.6;margin-bottom:16px}
+.step{display:flex;gap:9px;align-items:flex-start;font-size:12px;color:var(--mu);line-height:1.5;margin-bottom:8px}
+.sn{width:19px;height:19px;border-radius:50%;background:var(--ink);color:white;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;margin-top:1px}
+.lbl{font-size:10px;font-weight:700;color:var(--mu);font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.08em;display:block;margin:10px 0 4px}
+.si{width:100%;border:1.5px solid var(--bo);border-radius:9px;padding:9px 12px;font-family:'DM Mono',monospace;font-size:13px;color:var(--ink);background:white;margin-bottom:2px;transition:border-color .2s}
+.si:focus{outline:none;border-color:var(--bl)}
+.nb-row{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:10px}
+.nb-btn{padding:8px;border:1.5px solid var(--bo);border-radius:8px;background:white;font-family:'Instrument Sans',sans-serif;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;color:var(--mu)}
+.nb-btn:hover,.nb-btn.sel{border-color:var(--gn);background:var(--gn3);color:var(--gn)}
+.go-btn{width:100%;background:var(--ink);color:white;border:none;border-radius:9px;padding:11px;font-family:'Instrument Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;margin-top:6px;transition:opacity .2s}
+.go-btn:hover{opacity:.85}
+.err-box{background:var(--rd2);border:1px solid rgba(155,44,44,.25);border-radius:8px;padding:8px 11px;font-size:12px;color:var(--rd);margin-bottom:9px;display:none}
+.hint{font-size:11px;color:var(--mu);text-align:center;margin-top:9px;line-height:1.5}
+.hint a{color:var(--bl);text-decoration:none}.hint a:hover{text-decoration:underline}
+/* HEADER */
+.hdr{background:var(--ink);padding:16px 18px 12px;position:sticky;top:0;z-index:100}
+.hi{max-width:1100px;margin:0 auto}
+.ht{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.hey{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--sk);margin-bottom:3px}
+.htit{font-family:'Fraunces',serif;font-size:19px;font-weight:500;color:#fff;line-height:1.2}
+.htit em{font-style:italic;color:var(--sk)}
+.hr2{display:flex;flex-direction:column;align-items:flex-end;gap:4px}
+.kp{background:rgba(245,200,66,.15);border:1px solid rgba(245,200,66,.3);border-radius:7px;padding:4px 9px;font-family:'DM Mono',monospace;font-size:11px;color:#f5c842}
+.cp{background:rgba(45,106,79,.25);border:1px solid rgba(45,106,79,.4);border-radius:7px;padding:4px 9px;font-size:11px;font-weight:600;color:#7dd4a8}
+.sbar{background:rgba(255,255,255,.06);border-top:1px solid rgba(255,255,255,.08);margin-top:9px;padding-top:9px;display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.slbl{font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.3);flex-shrink:0}
+.sbtns{display:flex;gap:5px}
+.sbtn{padding:5px 11px;border-radius:20px;border:1.5px solid rgba(255,255,255,.14);background:transparent;font-family:'Instrument Sans',sans-serif;font-size:11px;font-weight:600;color:rgba(255,255,255,.38);cursor:pointer;transition:all .2s}
+.sbtn.s1.on{background:rgba(45,106,79,.35);border-color:#7dd4a8;color:#7dd4a8}
+.sbtn.s2.on{background:rgba(138,92,0,.35);border-color:#f5c842;color:#f5c842}
+.sstat{font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,.28)}
+.pw{margin-top:8px}
+.plbl{display:flex;justify-content:space-between;font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,.32);margin-bottom:4px}
+.pt{height:3px;background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden}
+.pf{height:100%;background:linear-gradient(90deg,var(--sk),#f5c842);border-radius:2px;transition:width .4s ease}
+/* NAV */
+.nw{background:var(--paper);border-bottom:1px solid var(--bo);position:sticky;top:102px;z-index:90}
+.nav{max-width:1100px;margin:0 auto;display:flex;gap:2px;padding:7px 10px;overflow-x:auto;scrollbar-width:none}
+.nav::-webkit-scrollbar{display:none}
+.navb{padding:6px 11px;border-radius:20px;border:none;background:transparent;font-family:'Instrument Sans',sans-serif;font-size:11px;font-weight:600;color:var(--mu);cursor:pointer;white-space:nowrap;transition:all .18s}
+.navb:hover{background:var(--bo);color:var(--ink)}.navb.active{background:var(--ink);color:white}
+/* MAIN */
+.main{max-width:1100px;margin:0 auto;padding:12px 11px 90px}
+.panel{display:none}.panel.active{display:block;animation:pi .18s ease}
+@keyframes pi{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+/* GRID */
+.g{display:grid;grid-template-columns:repeat(12,1fr);gap:9px;margin-bottom:9px}
+.c12{grid-column:span 12}.c8{grid-column:span 8}.c7{grid-column:span 7}.c6{grid-column:span 6}.c5{grid-column:span 5}.c4{grid-column:span 4}.c3{grid-column:span 3}
+@media(max-width:860px){.c8,.c7,.c6,.c5,.c4,.c3{grid-column:span 12}}
+/* CARD */
+.card{background:var(--paper);border:1px solid var(--bo);border-radius:15px;padding:14px;box-shadow:var(--sh)}
+.card.gl{border-left:3px solid var(--gn)}.card.gol{border-left:3px solid var(--gd);background:var(--gd3)}
+.card.rl{border-left:3px solid var(--rd);background:var(--rd2)}.card.bl{border-left:3px solid var(--bl);background:var(--bl2)}
+/* METRIC */
+.mey{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--mu);margin-bottom:4px}
+.mval{font-family:'Fraunces',serif;font-size:24px;font-weight:500;line-height:1.05;letter-spacing:-.02em}
+.mval.gn{color:var(--gn)}.mval.gd{color:var(--gd)}.mval.bl{color:var(--bl)}.mval.rd{color:var(--rd)}
+.mrp{font-family:'DM Mono',monospace;font-size:11px;color:var(--mu);margin-top:2px}
+.mnote{font-size:11px;color:var(--mu);line-height:1.5;margin-top:5px}
+.sec{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--mu);margin-bottom:8px}
+.ctit{font-family:'Fraunces',serif;font-size:14px;font-weight:500;margin-bottom:10px}
+/* TABLE */
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:var(--mu);padding:7px 9px;border-bottom:1.5px solid var(--bo);background:rgba(0,0,0,.02)}
+td{padding:7px 9px;border-bottom:1px dashed var(--bo);vertical-align:top;line-height:1.4}
+tr:last-child td{border-bottom:none}
+.num{text-align:right;font-family:'DM Mono',monospace;font-weight:500;font-size:12px;white-space:nowrap}
+.num.ok{color:var(--gn)}.num.bad{color:var(--rd)}.num.gd{color:var(--gd)}
+.srp{font-family:'DM Mono',monospace;font-size:10px;color:var(--mu);display:block;margin-top:1px}
+tr.tot td{background:var(--gn3);font-weight:700}
+tr.tot .num{color:var(--gn)}
+tr.wf td{background:var(--gd2)}
+tr.wt td{background:var(--bl2)}
+tr.wn td{background:var(--gd2)}
+/* MONEV */
+.mv-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin-bottom:10px}
+.mv-cell{background:white;border:1.5px solid var(--bo);border-radius:11px;padding:11px;transition:border-color .2s;position:relative}
+.mv-cell:focus-within{border-color:var(--bl)}
+.mv-lbl{font-family:'DM Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:var(--mu);margin-bottom:4px}
+.mv-yen{display:flex;align-items:center;gap:3px}
+.mv-yen span{font-family:'DM Mono',monospace;font-size:12px;color:var(--mu)}
+.mv-inp{border:none;background:transparent;font-family:'DM Mono',monospace;font-size:15px;font-weight:600;color:var(--ink);width:100%;min-width:0;padding:0;outline:none}
+.mv-inp:focus{color:var(--bl)}
+.mv-rp{font-family:'DM Mono',monospace;font-size:10px;color:var(--mu);margin-top:2px}
+.mv-delta{font-size:11px;font-weight:600;margin-top:3px}
+.mv-delta.ok{color:var(--gn)}.mv-delta.bad{color:var(--rd)}.mv-delta.zero{color:var(--mu)}
+.mv-who{font-family:'DM Mono',monospace;font-size:9px;color:var(--mu);margin-top:3px;opacity:.65}
+/* BUCKETS */
+.bt-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:9px}
+.bt-card{background:white;border:1.5px solid var(--bo);border-radius:13px;padding:13px}
+.bt-name{font-family:'DM Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:var(--mu);margin-bottom:4px}
+.bt-tgt{font-family:'DM Mono',monospace;font-size:10px;color:var(--mu);margin-bottom:7px}
+.bt-inp-row{display:flex;align-items:center;gap:5px;margin-bottom:5px}
+.bt-pfx{font-family:'DM Mono',monospace;font-size:12px;color:var(--mu);flex-shrink:0}
+.bt-inp{border:1.5px solid var(--bo);border-radius:8px;padding:6px 9px;font-family:'DM Mono',monospace;font-size:14px;font-weight:600;width:100%;color:var(--ink);background:var(--bg);transition:border-color .2s}
+.bt-inp:focus{outline:none;border-color:var(--bl);background:white}
+.bt-bw{height:5px;background:var(--bo);border-radius:3px;overflow:hidden;margin-bottom:4px}
+.bt-bf{height:100%;border-radius:3px;transition:width .4s ease}
+.bt-pct{font-family:'DM Mono',monospace;font-size:11px;font-weight:600}
+.bt-rp{font-family:'DM Mono',monospace;font-size:10px;color:var(--mu);margin-top:2px}
+.bt-note{font-size:10px;color:var(--mu);margin-top:3px;line-height:1.4}
+.bt-who{font-family:'DM Mono',monospace;font-size:9px;color:var(--mu);margin-top:3px;opacity:.65}
+/* CHECKLIST */
+.cl{display:flex;flex-direction:column;gap:5px}
+.ci{display:flex;align-items:flex-start;gap:8px;padding:8px 10px;border-radius:10px;border:1.5px solid var(--bo);background:white;cursor:pointer;user-select:none;transition:all .2s}
+.ci:hover{border-color:var(--bl)}.ci.done{background:var(--gn3);border-color:rgba(45,106,79,.3)}.ci.done .cil{text-decoration:line-through;color:var(--mu)}
+.cbox{width:18px;height:18px;border-radius:5px;border:2px solid var(--bo);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px;background:white;transition:all .2s;margin-top:1px}
+.ci.done .cbox{background:var(--gn);border-color:var(--gn);color:white}
+.cil{font-size:12px;font-weight:600;color:var(--ink)}.cid{font-size:11px;color:var(--mu);margin-top:1px;line-height:1.4}
+.ctag{margin-left:auto;font-family:'DM Mono',monospace;font-size:10px;padding:2px 7px;border-radius:20px;white-space:nowrap;flex-shrink:0;margin-top:1px}
+.trd{background:var(--rd2);color:var(--rd)}.tor{background:var(--gd2);color:var(--gd)}.tbl{background:var(--bl2);color:var(--bl)}.tgn{background:var(--gn2);color:var(--gn)}
+.ci-who{font-family:'DM Mono',monospace;font-size:9px;color:var(--mu);margin-left:3px;opacity:.65}
+/* MEMO */
+.memo-ta{width:100%;min-height:100px;border:1.5px solid var(--bo);border-radius:9px;padding:11px 13px;font-family:'Instrument Sans',sans-serif;font-size:13px;color:var(--ink);background:white;resize:vertical;transition:border-color .2s;line-height:1.6}
+.memo-ta:focus{outline:none;border-color:var(--bl)}
+.memo-meta{display:flex;justify-content:space-between;align-items:center;margin-top:5px}
+.memo-who{font-family:'DM Mono',monospace;font-size:10px;color:var(--mu)}
+/* CASHFLOW */
+.cfc{display:flex;gap:4px;align-items:flex-end;height:100px;padding:0 2px;margin:10px 0 5px;position:relative}
+.bw{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;position:relative;cursor:pointer}
+.bar{width:100%;border-radius:3px 3px 0 0;transition:opacity .2s;min-height:3px}
+.bw:hover .bar{opacity:.72}
+.bl2{font-family:'DM Mono',monospace;font-size:8px;color:var(--mu);text-align:center;line-height:1.2}
+.bv{font-family:'DM Mono',monospace;font-size:8px;font-weight:600;color:var(--ink);text-align:center}
+.btt{display:none;position:absolute;bottom:calc(100% + 5px);left:50%;transform:translateX(-50%);background:var(--ink);color:white;font-size:10px;padding:5px 8px;border-radius:7px;white-space:nowrap;z-index:20;font-family:'DM Mono',monospace;pointer-events:none;line-height:1.5}
+.bw:hover .btt{display:block}
+.cfleg{display:flex;gap:9px;font-size:11px;color:var(--mu);flex-wrap:wrap;margin-top:3px}
+.cfleg span{display:flex;align-items:center;gap:3px}
+.dot{width:7px;height:7px;border-radius:2px;flex-shrink:0}
+/* MISC */
+.rule{display:flex;gap:9px;align-items:flex-start;padding:10px;border-radius:12px;margin-bottom:7px}
+.rule.ok{background:var(--gn3);border:1px solid rgba(45,106,79,.18)}.rule.warn{background:var(--gd2);border:1px solid rgba(138,92,0,.18)}
+.rn{font-family:'Fraunces',serif;font-size:17px;font-weight:500;min-width:22px;line-height:1}
+.rule.ok .rn{color:var(--gn)}.rule.warn .rn{color:var(--gd)}
+.rb{font-size:12px;color:var(--ink);line-height:1.6}.rb b{font-weight:700}.rb small{font-size:11px;color:var(--mu)}
+.alert{border-radius:11px;padding:10px 12px;font-size:12px;line-height:1.55;margin-bottom:8px}
+.alert.ok{background:var(--gn3);border:1px solid rgba(45,106,79,.2);color:#1a4a30}
+.alert.warn{background:var(--gd2);border:1px solid rgba(138,92,0,.2);color:#5a3c00}
+.alert.danger{background:var(--rd2);border:1px solid rgba(155,44,44,.2);color:#6b1a1a}
+.alert.info{background:var(--bl2);border:1px solid rgba(30,58,110,.2);color:#1a2f5a}
+.pill{display:inline-block;border-radius:999px;padding:2px 7px;font-size:11px;font-weight:700}
+.pill.g{background:var(--gn2);color:var(--gn)}.pill.y{background:var(--gd2);color:var(--gd)}.pill.b{background:var(--bl2);color:var(--bl)}
+.milestones{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:7px;margin-top:7px}
+.ms-card{border-radius:12px;padding:11px;border:1px solid var(--bo);background:white;text-align:center}
+.ms-days{font-family:'Fraunces',serif;font-size:22px;font-weight:500;line-height:1}
+.ms-days.urgent{color:var(--rd)}.ms-days.soon{color:var(--gd)}.ms-days.ok{color:var(--gn)}
+.ms-lbl{font-size:11px;color:var(--mu);margin-top:3px;line-height:1.3}
+.ms-date{font-family:'DM Mono',monospace;font-size:10px;color:var(--mu);margin-top:2px}
+.mf{background:linear-gradient(135deg,#1a1a1a,#2d3860);border-radius:15px;padding:14px;color:white;margin-bottom:9px}
+.mf-tag{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--sk);margin-bottom:4px}
+.mf-tit{font-family:'Fraunces',serif;font-size:15px;font-weight:500;line-height:1.3;margin-bottom:4px}
+.mf-tit em{font-style:italic;color:#f5c842}
+.mf-body{font-size:12px;color:rgba(255,255,255,.68);line-height:1.6}
+.mf-acts{display:flex;flex-wrap:wrap;gap:5px;margin-top:7px}
+.mf-act{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.14);border-radius:7px;padding:4px 8px;font-size:11px;color:rgba(255,255,255,.78)}
+.conv-row{display:grid;grid-template-columns:1fr auto 1fr;gap:6px;align-items:center;margin-bottom:6px}
+.csep{font-family:'Fraunces',serif;font-size:17px;color:var(--mu);text-align:center}
+input.cv{border:1.5px solid var(--bo);border-radius:8px;padding:8px 10px;font-family:'DM Mono',monospace;font-size:13px;width:100%;background:white;color:var(--ink);transition:border-color .2s}
+input.cv:focus{outline:none;border-color:var(--bl)}
+.cres{background:var(--gn3);border-radius:8px;padding:8px 10px;font-family:'DM Mono',monospace;font-size:13px;font-weight:600;color:var(--gn);display:none}
+.dv{height:1px;background:var(--bo);margin:9px 0}
+.sv-btn{background:var(--gn);color:white;border:none;border-radius:8px;padding:6px 13px;font-family:'Instrument Sans',sans-serif;font-size:12px;font-weight:600;cursor:pointer;transition:opacity .2s}
+.sv-btn:hover{opacity:.85}
+
+body.s1 .s2o{display:none}
+body.s2 .s1o{display:none}
+@media(max-width:640px){.hdr{padding:12px 12px 10px}.htit{font-size:16px}.nw{top:98px}}
+</style>
+</head>
+<body class="s1">
+
+<!-- HEADER -->
+<header class="hdr">
+  <div class="hi">
+    <div class="ht">
+      <div>
+        <div class="hey">Japan Financial Hub v18 · <span id="ubadge">—</span></div>
+        <h1 class="htit">Apato Adachi · <em>Sajidah &amp; Keluarga</em></h1>
+      </div>
+      <div class="hr2">
+        <div class="kp">¥1 = Rp112,5 · <span id="ldate"></span></div>
+        <div class="cp">✓ Arubaito · ✓ Gaji PNS · ✓ Sewa Jakarta</div>
+      </div>
+    </div>
+    <div class="sbar">
+      <span class="slbl">Skenario Ilham:</span>
+      <div class="sbtns">
+        <button class="sbtn s1 on" id="s1b" onclick="setSce(1)">🎓 S1 GRIPS</button>
+        <button class="sbtn s2" id="s2b" onclick="setSce(2)">🏠 S2 CTLN</button>
+      </div>
+      <span class="sstat" id="sst">S1: saving 2 thn ≈ ¥6.017.414 (Rp676,9 jt)</span>
+    </div>
+    <div class="pw">
+      <div class="plbl"><span>Checklist persiapan</span><span id="pct">0%</span></div>
+      <div class="pt"><div class="pf" id="pf" style="width:0%"></div></div>
+    </div>
+  </div>
+</header>
+
+<!-- NAV -->
+<div class="nw">
+  <nav class="nav">
+    <button class="navb active" onclick="go('dash',this)">🏠 Command</button>
+    <button class="navb" onclick="go('monev',this)">📝 Monev Aktual</button>
+    <button class="navb" onclick="go('bucket',this)">🪣 Bucket Tracker</button>
+    <button class="navb" onclick="go('checklist',this)">✅ Checklist</button>
+    <button class="navb" onclick="go('memo',this)">💬 Memo Bersama</button>
+    <button class="navb" onclick="go('cashflow',this)">📈 Cashflow</button>
+    <button class="navb" onclick="go('year2',this)">👨‍👩‍👦 Year 2</button>
+    <button class="navb" onclick="go('strategy',this)">🧠 Strategi</button>
+  </nav>
+</div>
+
+<main class="main">
+
+<!-- COMMAND -->
+<section id="dash" class="panel active">
+  <div class="mf" id="mf"></div>
+  <div class="g"><div class="card c12"><div class="sec">Countdown ke milestone kritis</div><div class="milestones" id="msto"></div></div></div>
+  <div class="g">
+    <div class="card c3"><div class="mey">Target saving Sep 2027</div><div class="mval gn">¥2.093.864</div><div class="mrp">Rp235.559.700</div><div class="mnote">Akhir Year 1 solo.</div></div>
+    <div class="card c3 s1o"><div class="mey">Saving 2 thn S1</div><div class="mval gn">¥6.017.414</div><div class="mrp">Rp676.959.100</div><div class="mnote">Incl. gaji PNS Ilham + sewa Jakarta.</div></div>
+    <div class="card c3 s2o"><div class="mey">Saving 2 thn S2</div><div class="mval gd">¥3.893.414</div><div class="mrp">Rp438.009.100</div><div class="mnote">Ilham tetap gaji PNS + sewa Jakarta.</div></div>
+    <div class="card c3"><div class="mey">Income rutin/bln Sajidah</div><div class="mval bl">¥259.222</div><div class="mrp">Rp29.162.475</div><div class="mnote">ADB + gaji PNS + arubaito.</div></div>
+    <div class="card c3"><div class="mey">Sewa Jakarta (per 1 Okt)</div><div class="mval gd">¥222.222</div><div class="mrp">Rp25.000.000/tahun</div><div class="mnote">Mulai Oktober 2027. Lagi Oktober 2028.</div></div>
+  </div>
+  <div class="g">
+    <div class="card c8"><div class="ctit">Ringkasan Monev Terbaru</div><div id="dash-sum"><div class="alert info">Belum ada data aktual. Buka <b>Monev Aktual</b> untuk mulai input.</div></div></div>
+    <div class="card c4">
+      <div class="ctit">Konverter ¥ ↔ Rp</div>
+      <div class="conv-row"><input class="cv" id="yin" type="number" placeholder="¥ Yen" oninput="cy()"><div class="csep">⇄</div><input class="cv" id="rin" type="number" placeholder="Rp" oninput="cr()"></div>
+      <div class="cres" id="cres"></div>
+      <div class="dv"></div>
+      <table>
+        <tr><td style="font-size:11px">Sewa ¥55.000</td><td class="num">Rp6.187.500</td></tr>
+        <tr><td style="font-size:11px">Stipend ¥147.000</td><td class="num">Rp16.537.500</td></tr>
+        <tr><td style="font-size:11px">Sewa Jakarta ÷12</td><td class="num">¥18.519/bln</td></tr>
+        <tr><td style="font-size:11px;font-weight:700">Total rutin ¥259k</td><td class="num ok" style="font-weight:700">Rp29.162.475</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- MONEV AKTUAL -->
+<section id="monev" class="panel">
+  <div class="g"><div class="card c12">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:7px">
+      <div class="ctit" style="margin-bottom:0">Pengeluaran Aktual vs Proyeksi</div>
+      <div style="display:flex;gap:6px;align-items:center">
+        <select id="mv-mo" style="border:1.5px solid var(--bo);border-radius:8px;padding:5px 9px;font-family:'DM Mono',monospace;font-size:12px;background:white;color:var(--ink);cursor:pointer" onchange="renderMV()"></select>
+        <button class="sv-btn" onclick="saveMV()">Simpan</button>
+      </div>
+    </div>
+    <div class="mv-grid" id="mv-grid"></div>
+    <div id="mv-totals"></div>
+  </div></div>
+</section>
+
+<!-- BUCKET TRACKER -->
+<section id="bucket" class="panel">
+  <div class="g"><div class="card c12">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:7px">
+      <div class="ctit" style="margin-bottom:0">Status 4 Bucket Keuangan</div>
+      <button class="sv-btn" onclick="saveBT()">Simpan</button>
+    </div>
+    <div class="alert info" style="margin-bottom:10px">Input jumlah aktual di tiap bucket. Perubahan akan langsung terlihat oleh keduanya setelah disimpan.</div>
+    <div class="bt-grid" id="bt-grid"></div>
+  </div></div>
+</section>
+
+<!-- CHECKLIST -->
+<section id="checklist" class="panel">
+  <div class="g"><div class="card c12">
+    <div class="ctit">Checklist Bersama — siapa centang tercatat otomatis</div>
+    <div class="sec" style="margin-top:4px">🔴 Juni 2026</div>
+    <div class="cl">
+      <div class="ci done" data-id="utas" onclick="tCI(this)"><div class="cbox">✓</div><div><div class="cil">UTAS student ID card — submitted</div><div class="cid">プトリ・サジダ ✓</div></div><span class="ctag tgn">Done ✓</span><span class="ci-who" id="w-utas"></span></div>
+      <div class="ci done" data-id="nakamura" onclick="tCI(this)"><div class="cbox">✓</div><div><div class="cil">Reply email Ms. Nakamura GraSPP</div></div><span class="ctag tgn">Done ✓</span><span class="ci-who" id="w-nakamura"></span></div>
+      <div class="ci done" data-id="baito-ok" onclick="tCI(this)"><div class="cbox">✓</div><div><div class="cil">Konfirmasi arubaito diizinkan ADB-JSP ✓</div></div><span class="ctag tgn">Confirmed</span><span class="ci-who" id="w-baito-ok"></span></div>
+      <div class="ci done" data-id="gaji-ok" onclick="tCI(this)"><div class="cbox">✓</div><div><div class="cil">Konfirmasi gaji PNS Kemenkeu tetap jalan (Sajidah + Ilham) ✓</div></div><span class="ctag tgn">Confirmed</span><span class="ci-who" id="w-gaji-ok"></span></div>
+      <div class="ci" data-id="kak-g" onclick="tCI(this)"><div class="cbox"></div><div><div class="cil">WA Kak Gilang — konfirmasi unit Adachi & deadline</div><div class="cid">¥55.000/bln sewa · tanya batas waktu</div></div><span class="ctag trd">Hari ini!</span><span class="ci-who" id="w-kak-g"></span></div>
+      <div class="ci" data-id="osta" onclick="tCI(this)"><div class="cbox"></div><div><div class="cil">Apply OSTA (Toshima A + Komaba Lodge)</div></div><span class="ctag trd">≤25 Juni!</span><span class="ci-who" id="w-osta"></span></div>
+      <div class="ci" data-id="sewa-akad" onclick="tCI(this)"><div class="cbox"></div><div><div class="cil">Tandatangani akad sewa rumah Jakarta sebelum Ilham berangkat</div><div class="cid">Rp25 jt/tahun · pastikan kontrak jelas sebelum Okt 2027</div></div><span class="ctag tor">Sebelum Okt '27</span><span class="ci-who" id="w-sewa-akad"></span></div>
+    </div>
+    <div class="sec" style="margin-top:12px">🟠 Juli–Agustus 2026</div>
+    <div class="cl">
+      <div class="ci" data-id="tiket" onclick="tCI(this)"><div class="cbox"></div><div><div class="cil">Beli tiket Jakarta–Tokyo (max ¥60.000 = Rp6,75 jt)</div><div class="cid">Kirim receipt + e-ticket ke pryugaku.j@gs.mail.u-tokyo.ac.jp</div></div><span class="ctag tor">Juli–Agt</span><span class="ci-who" id="w-tiket"></span></div>
+      <div class="ci" data-id="usd" onclick="tCI(this)"><div class="cbox"></div><div><div class="cil">Siapkan USD 2.500 cash (≈ Rp42 jt)</div><div class="cid">Bank account butuh 6+ minggu — wajib, bukan opsional</div></div><span class="ctag tor">Sebelum terbang</span><span class="ci-who" id="w-usd"></span></div>
+      <div class="ci" data-id="coe" onclick="tCI(this)"><div class="cbox"></div><div><div class="cil">CoE dari UTokyo → proses visa student di KBRI</div></div><span class="ctag tor">Juli–Agt</span><span class="ci-who" id="w-coe"></span></div>
+    </div>
+    <div class="sec" style="margin-top:12px">🔵 Setelah tiba Tokyo</div>
+    <div class="cl">
+      <div class="ci" data-id="boarding" onclick="tCI(this)"><div class="cbox"></div><div><div class="cil">Kirim boarding pass ke GraSPP hari landing</div></div><span class="ctag tbl">Hari tiba</span><span class="ci-who" id="w-boarding"></span></div>
+      <div class="ci" data-id="mynumber" onclick="tCI(this)"><div class="cbox"></div><div><div class="cil">Daftar MyNumber + zairyu card Adachi Ward</div><div class="cid">Wajib ≤14 hari</div></div><span class="ctag trd">≤14 hari</span><span class="ci-who" id="w-mynumber"></span></div>
+      <div class="ci" data-id="jpbank" onclick="tCI(this)"><div class="cbox"></div><div><div class="cil">Buka JP Bank → kirim bank info ke GraSPP ASAP</div></div><span class="ctag tbl">Minggu ke-2</span><span class="ci-who" id="w-jpbank"></span></div>
+      <div class="ci" data-id="pass" onclick="tCI(this)"><div class="cbox"></div><div><div class="cil">Student commuter certificate → student pass</div><div class="cid">Hemat ¥3.500/bln</div></div><span class="ctag tbl">Hari orientasi</span><span class="ci-who" id="w-pass"></span></div>
+      <div class="ci" data-id="coop" onclick="tCI(this)"><div class="cbox"></div><div><div class="cil">Daftar UTokyo Co-op (deposit ¥24.000 refundable)</div></div><span class="ctag tbl">Minggu pertama</span><span class="ci-who" id="w-coop"></span></div>
+      <div class="ci" data-id="rakuten" onclick="tCI(this)"><div class="cbox"></div><div><div class="cil">Buka Rakuten Bank + auto-transfer ¥140k tgl 20</div></div><span class="ctag tbl">Bulan ke-2</span><span class="ci-who" id="w-rakuten"></span></div>
+    </div>
+    <div class="sec" style="margin-top:12px">🟡 November 2026 — Kritis Marvelio</div>
+    <div class="cl">
+      <div class="ci" data-id="yochi-s" onclick="tCI(this)"><div class="cbox"></div><div><div class="cil">Survei yōchien sekitar Kita-Ayase</div></div><span class="ctag tor">Okt–Nov</span><span class="ci-who" id="w-yochi-s"></span></div>
+      <div class="ci" data-id="gansho" onclick="tCI(this)"><div class="cbox"></div><div><div class="cil">Submit 願書 ke yōchien 🚨</div><div class="cid">Untuk Marvelio Oktober 2027 — jangan tunggu dia tiba!</div></div><span class="ctag trd">November!</span><span class="ci-who" id="w-gansho"></span></div>
+    </div>
+    <div class="sec" style="margin-top:12px">🟣 2027 — Kedatangan Keluarga</div>
+    <div class="cl">
+      <div class="ci" data-id="sewa-ok" onclick="tCI(this)"><div class="cbox"></div><div><div class="cil">Terima sewa Jakarta Rp25 jt (1 Oktober 2027)</div><div class="cid">= ¥222.222 · alokasi ke family arrival reserve</div></div><span class="ctag tor">1 Okt 2027</span><span class="ci-who" id="w-sewa-ok"></span></div>
+      <div class="ci" data-id="visa-klg" onclick="tCI(this)"><div class="cbox"></div><div><div class="cil">Proses visa Mas Ilham + Marvelio</div></div><span class="ctag tbl">Okt 2027</span><span class="ci-who" id="w-visa-klg"></span></div>
+      <div class="ci" data-id="kodomo" onclick="tCI(this)"><div class="cbox"></div><div><div class="cil">Daftar Kodomo Teate Marvelio (¥10.000/bln)</div><div class="cid">Adachi Ward Office — hari pertama Marvelio tiba</div></div><span class="ctag tbl">Hari tiba</span><span class="ci-who" id="w-kodomo"></span></div>
+      <div class="ci s2o" data-id="pte" onclick="tCI(this)"><div class="cbox"></div><div><div class="cil">S2: Urus permission to engage Ilham</div><div class="cid">Tanpa ini tidak bisa arubaito. Buffer ¥300k wajib siap.</div></div><span class="ctag trd">S2 — Hari tiba</span><span class="ci-who" id="w-pte"></span></div>
+    </div>
+  </div></div>
+</section>
+
+<!-- MEMO -->
+<section id="memo" class="panel">
+  <div class="g"><div class="card c12">
+    <div class="ctit">Memo Bulanan Bersama</div>
+    <div class="alert info" style="margin-bottom:10px">Tulis catatan, keputusan, atau update penting bulan ini. Siapapun yang edit, keduanya langsung lihat setelah disimpan.</div>
+    <div class="sec">Bulan ini</div>
+    <textarea class="memo-ta" id="memo-ta" placeholder="Tulis di sini..." rows="5"></textarea>
+    <div class="memo-meta">
+      <span class="memo-who" id="memo-who">Terakhir: —</span>
+      <button class="sv-btn" onclick="saveMemo()">Simpan</button>
+    </div>
+    <div class="dv" style="margin-top:12px"></div>
+    <div class="sec">Catatan bulan sebelumnya</div>
+    <div id="memo-hist"></div>
+  </div></div>
+</section>
+
+<!-- CASHFLOW -->
+<section id="cashflow" class="panel">
+  <div class="g">
+    <div class="card c12">
+      <div style="font-family:'Fraunces',serif;font-size:15px;font-weight:500;margin-bottom:5px">Cashflow Bulanan — Year 1 (Okt 2026 – Sep 2027)</div>
+      <div class="cfc" id="cfc"></div>
+      <div class="cfleg">
+        <span><div class="dot" style="background:#f5c842"></div>Windfall ⭐</span>
+        <span><div class="dot" style="background:#7bb8d4"></div>Winter ❄</span>
+        <span><div class="dot" style="background:var(--gn)"></div>Normal</span>
+        <span><div class="dot" style="background:#bbb"></div>Belum arubaito</span>
+      </div>
+    </div>
+    <div class="card c12">
+      <table><thead><tr><th>Bulan</th><th style="text-align:right">ADB</th><th style="text-align:right">Gaji PNS</th><th style="text-align:right">Arubaito</th><th style="text-align:right">Keluar</th><th style="text-align:right">Net</th><th style="text-align:right">Kumulatif</th><th>Catatan</th></tr></thead><tbody id="cftb"></tbody></table>
+    </div>
+  </div>
+</section>
+
+<!-- YEAR 2 -->
+<section id="year2" class="panel">
+  <div class="g">
+    <div class="card c12">
+      <div class="alert ok">🎉 <b>Oktober 2027 = bulan terkuat:</b> Sewa Jakarta ¥222.222 (Rp25 jt) + stipend reguler + semua arubaito = kas masuk <b>¥750.000+ (Rp84 jt+)</b>.</div>
+    </div>
+    <div class="card c6 gl s1o">
+      <div class="mey">S1 — Mas Ilham GRIPS</div>
+      <div class="mval gn">¥326.963<span style="font-size:12px">/bln avg</span></div>
+      <div class="mrp">Net saving · Rp36,8 jt/bln</div>
+      <div class="dv"></div>
+      <table>
+        <tr class="wn"><td>ADB Sajidah</td><td class="num gd">+¥147.000</td></tr>
+        <tr class="wn"><td>Gaji PNS Sajidah</td><td class="num gd">+¥22.222</td></tr>
+        <tr><td>Arubaito Sajidah</td><td class="num ok">+¥70.000</td></tr>
+        <tr class="wn"><td>Stipend GRIPS Ilham</td><td class="num gd">+¥147.000</td></tr>
+        <tr class="wn"><td>Gaji PNS Ilham (tubel)</td><td class="num gd">+¥22.222</td></tr>
+        <tr><td>Arubaito Ilham</td><td class="num ok">+¥90.000</td></tr>
+        <tr><td>Kodomo Teate</td><td class="num ok">+¥10.000</td></tr>
+        <tr class="wf"><td>Sewa Jakarta (avg/bln)</td><td class="num gd">+¥18.519</td></tr>
+        <tr class="tot"><td>Total income/bln avg</td><td class="num ok">+¥526.963<span class="srp">Rp59,3 jt</span></td></tr>
+        <tr><td>Semua pengeluaran</td><td class="num bad">-¥200.000</td></tr>
+        <tr class="tot"><td><b>Net saving S1</b></td><td class="num ok"><b>+¥326.963</b><span class="srp">Rp36,8 jt/bln</span></td></tr>
+      </table>
+    </div>
+    <div class="card c6 gol s2o">
+      <div class="mey">S2 — Mas Ilham CTLN</div>
+      <div class="mval gd">¥174.963<span style="font-size:12px">/bln avg</span></div>
+      <div class="mrp">Net saving · Rp19,7 jt/bln</div>
+      <div class="alert warn" style="margin:7px 0">⚠ Bln pertama: belum ada arubaito Ilham. Buffer <b>¥300k</b> wajib.</div>
+      <table>
+        <tr class="wn"><td>ADB + gaji PNS Sajidah</td><td class="num gd">+¥169.222</td></tr>
+        <tr><td>Arubaito Sajidah</td><td class="num ok">+¥70.000</td></tr>
+        <tr class="wn"><td>Gaji PNS Ilham (CTLN tetap gaji!)</td><td class="num gd">+¥22.222</td></tr>
+        <tr><td>Arubaito Ilham (bln ke-2+)</td><td class="num ok">+¥90.000</td></tr>
+        <tr class="wf"><td>Kodomo Teate + Sewa avg</td><td class="num gd">+¥28.519</td></tr>
+        <tr class="tot"><td>Total income avg</td><td class="num gd">+¥379.963<span class="srp">Rp42,7 jt</span></td></tr>
+        <tr><td>Semua pengeluaran</td><td class="num bad">-¥205.000</td></tr>
+        <tr class="tot"><td><b>Net saving S2</b></td><td class="num gd"><b>+¥174.963</b><span class="srp">Rp19,7 jt/bln</span></td></tr>
+      </table>
+      <div class="alert ok" style="margin-top:7px">S2 lebih kuat dari estimasi lama karena Ilham tetap gaji PNS ¥22.222/bln saat CTLN.</div>
+    </div>
+  </div>
+</section>
+
+<!-- STRATEGI -->
+<section id="strategy" class="panel">
+  <div class="g">
+    <div class="card c8">
+      <div class="ctit">Rules finansial — tidak boleh dilanggar</div>
+      <div class="rule ok"><div class="rn">1</div><div class="rb"><b>Budget solo max ¥123.500 (winter) / ¥119.000 (normal).</b><br><small>Kalau pos naik, potong pos lain bulan itu. Jangan potong saving.</small></div></div>
+      <div class="rule ok"><div class="rn">2</div><div class="rb"><b>Windfall ≠ uang spending.</b><br><small>Oktober ¥489k → emergency fund ¥238k. April ¥568k → family arrival ¥330k. Sewa Jakarta Oktober → saving utama.</small></div></div>
+      <div class="rule ok"><div class="rn">3</div><div class="rb"><b>Auto-transfer ¥140k ke Rakuten tiap tgl 20.</b><br><small>Sistem bekerja otomatis — ADHD-friendly, bukan willpower.</small></div></div>
+      <div class="rule ok"><div class="rn">4</div><div class="rb"><b>Family arrival reserve ¥330.000 siap sebelum Sep 2027.</b></div></div>
+      <div class="rule warn"><div class="rn">!</div><div class="rb"><b>Jika CTLN, siapkan buffer tambahan ¥220.000.</b><br><small>3 bulan awal Ilham belum kerja. Di luar emergency fund.</small></div></div>
+    </div>
+    <div class="card c4">
+      <div class="ctit">5 sumber income (Year 2 S1)</div>
+      <table>
+        <tr class="wn"><td style="font-size:11px">ADB-JSP Sajidah</td><td class="num gd">¥147.000</td></tr>
+        <tr class="wn"><td style="font-size:11px">Gaji PNS Sajidah</td><td class="num gd">¥22.222</td></tr>
+        <tr><td style="font-size:11px">Arubaito Sajidah</td><td class="num ok">¥70.000</td></tr>
+        <tr class="wn"><td style="font-size:11px">Stipend GRIPS Ilham</td><td class="num gd">¥147.000</td></tr>
+        <tr class="wn"><td style="font-size:11px">Gaji PNS Ilham</td><td class="num gd">¥22.222</td></tr>
+        <tr><td style="font-size:11px">Arubaito Ilham</td><td class="num ok">¥90.000</td></tr>
+        <tr><td style="font-size:11px">Kodomo Teate</td><td class="num ok">¥10.000</td></tr>
+        <tr class="wf"><td style="font-size:11px">Sewa Jakarta avg</td><td class="num gd">¥18.519</td></tr>
+        <tr class="tot"><td style="font-size:11px;font-weight:700">Total S1/bln</td><td class="num ok" style="font-size:13px"><b>¥526.963</b></td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+</main>
+  <span class="stxt" id="stxt">Menghubungkan...</span>
+  <span class="suser" id="suser"></span>
+  <button class="sbtn2" onclick="forcePull()">↓ Refresh</button>
+  <button class="sbtn2" onclick="forcePush()">↑ Kirim</button>
+  <button class="sbtn2" onclick="openOV()">⚙ Setup</button>
+</div>
+
+<script>
+const K=112.5;const TD=new Date();
+let UN=localStorage.getItem('jfc_n')||'Sajidah';
+let DB={cl:{},bk:{living:0,emergency:0,family:0,saving:0},mv:{},memo:{cur:'',hist:[],by:'',at:''}};
+
+// FORMAT
+function fmt(n){return Math.round(n).toLocaleString('id-ID')}
+function fY(n){return '¥'+Math.round(n).toLocaleString('id-ID')}
+function fR(n){if(n>=1e9)return 'Rp'+(n/1e9).toFixed(2)+' M';if(n>=1e6)return 'Rp'+(n/1e6).toFixed(1)+' jt';return 'Rp'+fmt(n)}
+function ts(){return new Date().toLocaleString('id-ID',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})}
+
+// LOAD/SAVE localStorage
+function saveLocal(){try{localStorage.setItem('jfc_db',JSON.stringify(DB));}catch(e){}}
+function loadLocal(){
+  try{
+    const raw=localStorage.getItem('jfc_db');
+    if(raw){const d=JSON.parse(raw);DB={...DB,...d};}
+  }catch(e){}
+}
+
+// USER NAME (simple prompt on first visit)
+function initUser(){
+  const saved=localStorage.getItem('jfc_n');
+  if(!saved){
+    const n=window.prompt('Nama kamu siapa?\n(ketik: Sajidah atau Mas Ilham)','Sajidah');
+    UN=n&&n.trim()?n.trim():'Sajidah';
+    localStorage.setItem('jfc_n',UN);
+  }
+  document.getElementById('ubadge').textContent=UN;
+}
+
+// APPLY ALL
+function applyDB(){applyCI();applyBK();applyMV();applyMemo();upProg();updDash()}
+
+// CHECKLIST
+function tCI(el){
+  const id=el.dataset.id,done=!el.classList.contains('done');
+  el.classList.toggle('done',done);el.querySelector('.cbox').textContent=done?'✓':'';
+  if(!DB.cl)DB.cl={};DB.cl[id]=done?UN:'';
+  const w=document.getElementById('w-'+id);if(w)w.textContent=done?'— '+UN:'';
+  upProg();saveLocal();
+}
+function applyCI(){
+  if(!DB.cl)return;
+  document.querySelectorAll('.ci[data-id]').forEach(el=>{
+    const id=el.dataset.id,who=DB.cl[id],done=!!who;
+    el.classList.toggle('done',done);el.querySelector('.cbox').textContent=done?'✓':'';
+    const w=document.getElementById('w-'+id);if(w)w.textContent=done?'— '+who:'';
+  });
+}
+function upProg(){
+  const all=document.querySelectorAll('.ci[data-id]');let d=0;
+  all.forEach(el=>{if(el.classList.contains('done'))d++});
+  const p=Math.round(d/all.length*100);
+  document.getElementById('pf').style.width=p+'%';document.getElementById('pct').textContent=p+'%';
+}
+
+// BUCKET
+const BKS=[
+  {key:'living',name:'💴 Living Bucket',tgt:0,col:'var(--gn)',note:'JP Bank. Budget hidup bulanan.'},
+  {key:'emergency',name:'🆘 Emergency Fund',tgt:238000,col:'var(--bl)',note:'Target ¥238.000 = 2 bulan living.'},
+  {key:'family',name:'✈ Family Arrival',tgt:330000,col:'var(--gd)',note:'Target ¥330.000 sebelum Sep 2027.'},
+  {key:'saving',name:'📈 Long-term Saving',tgt:2093864,col:'var(--sk)',note:'Target ¥2.093.864 akhir Year 1.'},
+];
+function renderBK(){
+  const el=document.getElementById('bt-grid');if(!el)return;el.innerHTML='';
+  BKS.forEach(b=>{
+    const v=DB.bk&&DB.bk[b.key]?DB.bk[b.key]:0;
+    const p=b.tgt>0?Math.min(Math.round(v/b.tgt*100),100):0;
+    const pc=p>=80?'var(--gn)':p>=40?'var(--gd)':'var(--rd)';
+    const who=DB.bk&&DB.bk[b.key+'_w']||'';
+    el.innerHTML+=`<div class="bt-card" style="border-top:3px solid ${b.col}">
+      <div class="bt-name">${b.name}</div>
+      <div class="bt-tgt">${b.tgt>0?'Target: '+fY(b.tgt)+' ('+fR(b.tgt*K)+')':'Tidak ada target tetap'}</div>
+      <div class="bt-inp-row"><span class="bt-pfx">¥</span><input class="bt-inp" id="bi-${b.key}" type="number" value="${v}" placeholder="0" oninput="updBKrp('${b.key}',this.value)"></div>
+      ${b.tgt>0?`<div class="bt-bw"><div class="bt-bf" id="bbf-${b.key}" style="width:${p}%;background:${pc}"></div></div><div class="bt-pct" id="bpct-${b.key}" style="color:${pc}">${p}% terisi</div>`:''}
+      <div class="bt-rp" id="brp-${b.key}">${fR(v*K)}</div>
+      ${who?`<div class="bt-who">Diupdate: ${who}</div>`:''}
+      <div class="bt-note">${b.note}</div>
+    </div>`;
+  });
+}
+function updBKrp(key,val){
+  const v=parseFloat(val)||0;
+  const r=document.getElementById('brp-'+key);if(r)r.textContent=fR(v*K);
+  const bk=BKS.find(b=>b.key===key);
+  if(bk&&bk.tgt>0){
+    const p=Math.min(Math.round(v/bk.tgt*100),100);
+    const pc=p>=80?'var(--gn)':p>=40?'var(--gd)':'var(--rd)';
+    const bf=document.getElementById('bbf-'+key);if(bf){bf.style.width=p+'%';bf.style.background=pc;}
+    const bp=document.getElementById('bpct-'+key);if(bp){bp.textContent=p+'% terisi';bp.style.color=pc;}
+  }
+}
+function applyBK(){renderBK()}
+function saveBT(){
+  if(!DB.bk)DB.bk={};
+  BKS.forEach(b=>{const i=document.getElementById('bi-'+b.key);if(i){DB.bk[b.key]=parseFloat(i.value)||0;DB.bk[b.key+'_w']=UN+' '+ts();}});
+  saveLocal();renderBK();
+  showToast('Bucket tersimpan ✓');
+}
+
+// MONEV
+const MMS=['Okt 2026','Nov 2026','Des 2026','Jan 2027','Feb 2027','Mar 2027','Apr 2027','Mei 2027','Jun 2027','Jul 2027','Agu 2027','Sep 2027'];
+const MPJ=[{a:489600,g:22222,b:0,o:184000},{a:147000,g:22222,b:0,o:119000},{a:147000,g:22222,b:0,o:123500},{a:147000,g:22222,b:90000,o:123500},{a:147000,g:22222,b:90000,o:123500},{a:147000,g:22222,b:90000,o:123500},{a:568600,g:22222,b:90000,o:119000},{a:147000,g:22222,b:90000,o:119000},{a:147000,g:22222,b:90000,o:119000},{a:147000,g:22222,b:90000,o:119000},{a:147000,g:22222,b:90000,o:119000},{a:147000,g:22222,b:90000,o:119000}];
+const MCAT=['sewa','utility','makan','transport','sim','gym','laundry','akademik','sosial','lain'];
+const MLBL=['Sewa','Utility','Makan','Transport','SIM','Gym','Laundry/Toiletris','Akademik','Sosial/Rekreasi','Lain-lain'];
+const MPBR=[55000,4000,36000,5500,2000,1200,4000,2000,2500,6800];
+function initMVSel(){
+  const s=document.getElementById('mv-mo');if(!s)return;s.innerHTML='';
+  MMS.forEach((m,i)=>{const o=document.createElement('option');o.value=i;o.textContent=m;s.appendChild(o);});
+  const cm=TD.getMonth(),cy=TD.getFullYear();let idx=0;
+  if(cy===2026&&cm>=9)idx=cm-9;else if(cy===2027&&cm<=8)idx=3+cm;
+  s.value=Math.min(idx,11);renderMV();
+}
+function renderMV(){
+  const s=document.getElementById('mv-mo');if(!s)return;
+  const mi=parseInt(s.value),mk='m'+mi;
+  const sv=DB.mv&&DB.mv[mk]?DB.mv[mk]:{};
+  const g=document.getElementById('mv-grid');if(!g)return;g.innerHTML='';
+  MCAT.forEach((c,i)=>{
+    const av=sv[c]!==undefined?sv[c]:'';const pv=MPBR[i];
+    const dl=av!==''?pv-parseFloat(av):null;
+    const dlH=dl!==null?`<div class="mv-delta ${dl>0?'ok':dl<0?'bad':'zero'}">${dl>0?'↓ hemat ¥'+fmt(dl):dl<0?'↑ lebih ¥'+fmt(Math.abs(dl)):'tepat'}</div>`:'';
+    const who=sv[c+'_w']||'';
+    g.innerHTML+=`<div class="mv-cell"><div class="mv-lbl">${MLBL[i]}</div><div class="mv-yen"><span>¥</span><input class="mv-inp" id="me-${c}" type="number" value="${av}" placeholder="${pv}"></div><div class="mv-rp" id="mr-${c}">${av!==''?fR(parseFloat(av)*K):'proj: '+fR(pv*K)}</div>${dlH}${who?`<div class="mv-who">${who}</div>`:''}</div>`;
+  });
+  MCAT.forEach(c=>{const i=document.getElementById('me-'+c);if(i)i.addEventListener('input',function(){const r=document.getElementById('mr-'+c);if(r)r.textContent=this.value?fR(parseFloat(this.value)*K):'';});});
+  renderMVTot(mi,sv);
+}
+function renderMVTot(mi,sv){
+  const pj=MPJ[mi];let at=0,fi=0;
+  MCAT.forEach(c=>{if(sv[c]!==undefined){at+=parseFloat(sv[c])||0;fi++;}});
+  const el=document.getElementById('mv-totals');if(!el)return;
+  if(fi===0){el.innerHTML='';return}
+  const inc=pj.a+pj.g+pj.b,an=inc-at,dl=pj.o-at;
+  el.innerHTML=`<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:7px;margin-top:7px">
+    <div class="mv-cell"><div class="mv-lbl">Proyeksi keluar</div><div style="font-family:'DM Mono',monospace;font-size:14px;font-weight:600;color:var(--rd)">${fY(pj.o)}</div><div class="mv-rp">${fR(pj.o*K)}</div></div>
+    <div class="mv-cell"><div class="mv-lbl">Aktual keluar</div><div style="font-family:'DM Mono',monospace;font-size:14px;font-weight:600">${fY(at)}</div><div class="mv-rp">${fR(at*K)}</div></div>
+    <div class="mv-cell"><div class="mv-lbl">Selisih</div><div style="font-family:'DM Mono',monospace;font-size:14px;font-weight:600;color:${dl>=0?'var(--gn)':'var(--rd)'}">${dl>=0?'↓ hemat ':'↑ lebih '}${fY(Math.abs(dl))}</div></div>
+    <div class="mv-cell"><div class="mv-lbl">Net saving bln ini</div><div style="font-family:'DM Mono',monospace;font-size:14px;font-weight:600;color:${an>=0?'var(--gn)':'var(--rd)'}">${fY(an)}</div><div class="mv-rp">${fR(an*K)}</div></div>
+  </div>`;
+}
+function saveMV(){
+  const s=document.getElementById('mv-mo');if(!s)return;
+  const mi=parseInt(s.value),mk='m'+mi;
+  if(!DB.mv)DB.mv={};if(!DB.mv[mk])DB.mv[mk]={};
+  MCAT.forEach(c=>{const i=document.getElementById('me-'+c);if(i&&i.value!==''){DB.mv[mk][c]=parseFloat(i.value)||0;DB.mv[mk][c+'_w']=UN+' '+ts();}});
+  saveLocal();renderMV();updDash();
+  showToast('Monev tersimpan ✓');
+}
+function applyMV(){initMVSel&&initMVSel()}
+
+// MEMO
+function saveMemo(){
+  const txt=document.getElementById('memo-ta').value;
+  if(!DB.memo)DB.memo={cur:'',hist:[],by:'',at:''};
+  const now=new Date().toISOString().slice(0,7);
+  if(DB.memo.at&&DB.memo.at.slice(0,7)!==now&&DB.memo.cur){
+    if(!DB.memo.hist)DB.memo.hist=[];
+    DB.memo.hist.unshift({mo:DB.memo.at.slice(0,7),txt:DB.memo.cur,by:DB.memo.by});
+    if(DB.memo.hist.length>12)DB.memo.hist=DB.memo.hist.slice(0,12);
+  }
+  DB.memo.cur=txt;DB.memo.by=UN;DB.memo.at=new Date().toISOString();
+  saveLocal();applyMemo();
+  showToast('Memo tersimpan ✓');
+}
+function applyMemo(){
+  if(!DB.memo)return;
+  const ta=document.getElementById('memo-ta');if(ta&&DB.memo.cur!==undefined)ta.value=DB.memo.cur;
+  const w=document.getElementById('memo-who');
+  if(w)w.textContent=DB.memo.by?`Terakhir: ${DB.memo.by} · ${DB.memo.at?new Date(DB.memo.at).toLocaleString('id-ID',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}):''}`:'—';
+  const h=document.getElementById('memo-hist');
+  if(h&&DB.memo.hist&&DB.memo.hist.length>0){
+    h.innerHTML=DB.memo.hist.map(x=>`<div style="background:white;border:1px solid var(--bo);border-radius:9px;padding:10px 12px;margin-bottom:7px"><div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--mu);margin-bottom:4px">${x.mo} · ${x.by||'—'}</div><div style="font-size:12px;line-height:1.6;white-space:pre-wrap">${x.txt}</div></div>`).join('');
+  }else if(h){h.innerHTML='<div style="font-size:12px;color:var(--mu)">Belum ada catatan sebelumnya.</div>'}
+}
+
+// DASH SUMMARY
+function updDash(){
+  const el=document.getElementById('dash-sum');if(!el)return;
+  if(!DB.mv||Object.keys(DB.mv).length===0){el.innerHTML='<div class="alert info">Belum ada data monev aktual. Buka <b>Monev Aktual</b> untuk mulai input.</div>';return}
+  const keys=Object.keys(DB.mv).sort().reverse();
+  let html='<table><thead><tr><th>Bulan</th><th style="text-align:right">Proyeksi</th><th style="text-align:right">Aktual</th><th style="text-align:right">Selisih</th></tr></thead><tbody>';
+  keys.slice(0,6).forEach(mk=>{
+    const mi=parseInt(mk.replace('m',''));const sv=DB.mv[mk];const pj=MPJ[mi];if(!pj)return;
+    let at=0,fi=0;MCAT.forEach(c=>{if(sv[c]!==undefined){at+=parseFloat(sv[c])||0;fi++;}});
+    if(fi===0)return;const dl=pj.o-at;
+    html+=`<tr><td style="font-size:11px">${MMS[mi]}</td><td class="num">${fY(pj.o)}</td><td class="num">${fY(at)}</td><td class="num ${dl>=0?'ok':'bad'}">${dl>=0?'↓ ':'↑ '}${fY(Math.abs(dl))}</td></tr>`;
+  });
+  html+='</tbody></table>';el.innerHTML=html;
+}
+
+// TOAST
+function showToast(msg){
+  let t=document.getElementById('toast');
+  if(!t){t=document.createElement('div');t.id='toast';t.style.cssText='position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--ink);color:white;padding:9px 18px;border-radius:20px;font-family:"DM Mono",monospace;font-size:12px;z-index:999;pointer-events:none;opacity:0;transition:opacity .3s';document.body.appendChild(t);}
+  t.textContent=msg;t.style.opacity='1';
+  setTimeout(()=>t.style.opacity='0',2000);
+}
+
+// SCENARIO
+function setSce(n){
+  document.body.className='s'+n;
+  document.getElementById('s1b').classList.toggle('on',n===1);
+  document.getElementById('s2b').classList.toggle('on',n===2);
+  document.getElementById('sst').textContent=n===1?'S1: saving 2 thn ≈ ¥6.017.414 (Rp676,9 jt)':'S2: saving 2 thn ≈ ¥3.893.414 (Rp438,0 jt) — Ilham tetap gaji PNS';
+  localStorage.setItem('jfc_sce',n);
+}
+
+// NAV + CONV
+function go(id,b){document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.navb').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');b.classList.add('active')}
+function cy(){const y=parseFloat(document.getElementById('yin').value)||0;document.getElementById('rin').value='';const r=document.getElementById('cres');if(!y){r.style.display='none';return}r.textContent=fY(y)+' = '+fR(y*K);r.style.display='block'}
+function cr(){const rp=parseFloat(document.getElementById('rin').value)||0;document.getElementById('yin').value='';const r=document.getElementById('cres');if(!rp){r.style.display='none';return}r.textContent=fR(rp)+' = '+fY(rp/K);r.style.display='block'}
+
+// CASHFLOW
+const CF=[
+  {m:'Okt 2026',a:489600,g:22222,b:0,o:184000,t:'wf',n:'WINDFALL ⭐ Settlement+book+NHI+travel.'},
+  {m:'Nov 2026',a:147000,g:22222,b:0,o:119000,t:'pr',n:'Belum arubaito.'},
+  {m:'Des 2026',a:147000,g:22222,b:0,o:123500,t:'wt',n:'❄ Winter. Belum arubaito.'},
+  {m:'Jan 2027',a:147000,g:22222,b:90000,o:123500,t:'wt',n:'❄ Arubaito mulai!'},
+  {m:'Feb 2027',a:147000,g:22222,b:90000,o:123500,t:'wt',n:'❄ Winter.'},
+  {m:'Mar 2027',a:147000,g:22222,b:90000,o:123500,t:'wt',n:'❄ Winter terakhir.'},
+  {m:'Apr 2027',a:568600,g:22222,b:90000,o:119000,t:'wf',n:'WINDFALL ⭐ Book+NHI+Thesis ¥272k!'},
+  {m:'Mei 2027',a:147000,g:22222,b:90000,o:119000,t:'nm',n:'Rutin.'},
+  {m:'Jun 2027',a:147000,g:22222,b:90000,o:119000,t:'nm',n:'Rutin.'},
+  {m:'Jul 2027',a:147000,g:22222,b:90000,o:119000,t:'nm',n:'Rutin.'},
+  {m:'Agu 2027',a:147000,g:22222,b:90000,o:119000,t:'nm',n:'Rutin.'},
+  {m:'Sep 2027',a:147000,g:22222,b:90000,o:119000,t:'nm',n:'Akhir Year 1.'},
+];
+function buildCF(){
+  const nets=CF.map(d=>d.a+d.g+d.b-d.o);const mx=Math.max(...nets);
+  const el=document.getElementById('cfc');if(!el)return;el.innerHTML='';
+  nets.forEach((net,i)=>{
+    const d=CF[i],h=Math.max(net/mx*100,3);
+    const col=d.t==='wf'?'#f5c842':d.t==='wt'?'#7bb8d4':d.t==='pr'?'#bbb':'var(--gn)';
+    const inc=d.a+d.g+d.b;const w=document.createElement('div');w.className='bw';
+    w.innerHTML=`<div class="bv">${net>=1e5?'¥'+(net/1000).toFixed(0)+'k':fY(net)}</div><div class="bar" style="height:${h}%;background:${col}"><div class="btt">📅 ${d.m}<br>In:${fY(inc)}<br>Out:${fY(d.o)}<br>Net:${fY(net)}<br><span style="opacity:.7">${d.n}</span></div></div><div class="bl2">${d.m.replace(' ','\n')}</div>`;
+    el.appendChild(w);
+  });
+}
+function buildTB(){
+  let c=0;const tb=document.getElementById('cftb');if(!tb)return;tb.innerHTML='';
+  CF.forEach(d=>{const inc=d.a+d.g+d.b,net=inc-d.o;c+=net;
+    const cl=d.t==='wf'?' class="wf"':d.t==='wt'?' class="wt"':'';
+    const bg=d.t==='wf'?' <span class="pill y">⭐</span>':d.t==='wt'?' <span class="pill b">❄</span>':'';
+    tb.innerHTML+=`<tr${cl}><td>${d.m}${bg}</td><td class="num ${d.t==='wf'?'gd':''}">${fY(d.a)}</td><td class="num">${fY(d.g)}</td><td class="num ${d.b>0?'ok':''}">${d.b>0?fY(d.b):'—'}</td><td class="num bad">${fY(d.o)}</td><td class="num ok">${fY(net)}<span class="srp">${fR(net*K)}</span></td><td class="num ok">${fY(c)}</td><td style="font-size:11px;color:var(--mu)">${d.n}</td></tr>`;
+  });
+  const tot=CF.reduce((a,d)=>a+d.a+d.g+d.b-d.o,0);
+  tb.innerHTML+=`<tr class="tot"><td><b>Total</b></td><td class="num gd">${fY(CF.reduce((a,d)=>a+d.a,0))}</td><td class="num">${fY(CF.reduce((a,d)=>a+d.g,0))}</td><td class="num ok">${fY(CF.reduce((a,d)=>a+d.b,0))}</td><td class="num bad">${fY(CF.reduce((a,d)=>a+d.o,0))}</td><td class="num ok" colspan="2"><b>${fY(tot)}</b><span class="srp">${fR(tot*K)}</span></td><td></td></tr>`;
+}
+
+// MILESTONES
+function buildMS(){
+  const ms=[{l:'Apply OSTA',d:new Date('2026-06-25')},{l:'Tiba Tokyo',d:new Date('2026-09-18')},{l:'Daftar Yōchien',d:new Date('2026-11-15')},{l:'Windfall April',d:new Date('2027-04-16')},{l:'Sewa Jakarta',d:new Date('2027-10-01')},{l:'Keluarga Tiba',d:new Date('2027-10-01')},{l:'Selesai Studi',d:new Date('2028-09-30')}];
+  const el=document.getElementById('msto');if(!el)return;el.innerHTML='';
+  ms.forEach(m=>{const df=Math.ceil((m.d-TD)/864e5);const cl=df<=14?'urgent':df<=60?'soon':'ok';const dp=df<0?Math.abs(df)+'h lalu':df===0?'Hari ini!':df+'h';
+    el.innerHTML+=`<div class="ms-card"><div class="ms-days ${cl}">${dp}</div><div class="ms-lbl">${m.l}</div><div class="ms-date">${m.d.toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'})}</div></div>`;
+  });
+}
+
+// MONTHLY FOCUS
+function buildMF(){
+  const m=TD.getMonth(),y=TD.getFullYear();let tag,tit,body,acts=[];
+  if(y===2026&&m===5){tag='Juni 2026 · Sekarang';tit='Dua hal <em>harus selesai minggu ini</em>';body='WA Kak Gilang hari ini. Apply OSTA sebelum 25 Juni. Keduanya paralel.';acts=['WA Kak Gilang','Apply OSTA ≤25 Jun','Upload ke Netlify'];}
+  else if(y===2026&&m>=6&&m<=7){tag='Juli–Agustus 2026';tit='Visa & tiket ke <em>Tokyo</em>';body='CoE dari UTokyo → proses visa student ke KBRI segera. Beli tiket max ¥60.000.';acts=['Proses visa KBRI','Beli tiket','Konfirmasi Apato'];}
+  else if(y===2026&&m===8){tag='September 2026';tit='Persiapan terakhir sebelum <em>terbang</em>';body='USD 2.500 sudah siap? Dokumen lengkap? Summer Prep Program online mulai 1 Sep.';acts=['Cek USD 2.500','Summer Prep','Cek dokumen'];}
+  else{tag='Fase aktif';tit='Fokus: <em>Konfirmasi Apato + OSTA</em>';body='WA Kak Gilang dan apply OSTA sebelum 25 Juni.';acts=['WA Kak Gilang','Apply OSTA','Buka Monev'];}
+  document.getElementById('mf').innerHTML=`<div class="mf-tag">📍 ${tag}</div><div class="mf-tit">${tit}</div><div class="mf-body">${body}</div><div class="mf-acts">${acts.map(a=>`<span class="mf-act">→ ${a}</span>`).join('')}</div>`;
+}
+
+// INIT
+document.getElementById('ldate').textContent=TD.toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'});
+initUser();
+loadLocal();
+buildCF();buildTB();buildMS();buildMF();
+applyDB();
+// restore scenario
+const savedSce=localStorage.getItem('jfc_sce');
+if(savedSce){setSce(parseInt(savedSce));}
+</script>
+</body>
+</html>
